@@ -8,26 +8,26 @@
 })
 export class PostService {
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpclient: HttpClient) {
   }
 
   createPost(post: any): Observable<any> {
-    return this.httpClient.post( POST_API + 'create', post);
+    return this.httpclient.post( POST_API + 'create', post);
   }
 
   getAllPosts(): Observable<any> {
-    return this.httpClient.get( POST_API + 'all');
+    return this.httpclient.get( POST_API + 'all');
   }
 
   getPostsForCurrentUser(): Observable<any> {
-    return this.httpClient.get(POST_API + 'user/posts');
+    return this.httpclient.get(POST_API + 'user/posts');
   }
 
   delete(id: number): Observable<any> {
-    return this.httpClient.post(POST_API + id + '/delete', null);
+    return this.httpclient.post(POST_API + id + '/delete', null);
   }
 
   likePost(id: number, username: string): Observable<any> {
-    return this.httpClient.post(POST_API + id + '/' + username +'like', null);
+    return this.httpclient.post(POST_API + id + '/' + username +'like', null);
   }
 }

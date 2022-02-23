@@ -8,18 +8,18 @@ const USER_API = 'http://localhost:8080/api/user';
 })
 export class UserService {
 
-  constructor(private httpClient:HttpClient) {
+  constructor(private httpclient:HttpClient) {
   }
 
   getUserById(id: number): Observable<any> {
-    return this.httpClient.get( USER_API + id);
+    return this.httpclient.get( USER_API + id);
   }
 
   getCurrentUser(): Observable<any> {
-    return this.httpClient.get(USER_API);
+    return this.httpclient.get(USER_API);
   }
 
   updateUser(user: any): Observable<any> {
-    return this.httpClient.post( USER_API + 'update', user);
+    return this.httpclient.post( USER_API + 'update', user);
   }
 }
