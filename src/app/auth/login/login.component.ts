@@ -39,18 +39,18 @@ export class LoginComponent implements OnInit {
       username: this.loginForm.value.username,
       password: this.loginForm.value.password
     }).subscribe(data => {
-      console.log(data);
+        console.log(data);
 
-      this.tokenService.saveToken(data.token);
-      this.tokenService.saveUser(data);
+        this.tokenService.saveToken(data.token);
+        this.tokenService.saveUser(data);
 
-      this.notificationService.showSnackBar('Successful authorization');
-      this.router.navigate(['/index']);
-      window.location.reload();
-    }
+        this.notificationService.showSnackBar('Successful authorization');
+        this.router.navigate(['/index']);
+        window.location.reload();
+      }
       ,error => {
-      console.log(error);
-      this.notificationService.showSnackBar('Incorrect login or password' + error.message);
-    });
+        console.log(error);
+        this.notificationService.showSnackBar('Incorrect login or password' + error.message);
+      });
   }
 }

@@ -14,4 +14,17 @@ export class NotificationService {
       duration: 5000
     });
   }
+
+  register(value: any) {
+
+  }
+
+  clear() {
+
+  }
+
+  success(registrationSuccessful: string, param2: { keepAfterRouteChange: boolean }) {
+
+  }
+
 }

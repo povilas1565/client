@@ -17,16 +17,21 @@ export class AuthService {
     });
   }
 
-  public register(user: any):Observable <any> {
-      return this.httpclient.post(AUTH_API + '/signup', {
-        email: user.email,
-        firstname: user.firstname,
-        lastname: user.lastname,
-        username: user.username,
-        password: user.password,
-        confirmPassword: user.confirmPassword
-      });
-    }
+  public register(user: any): Observable<any> {
+    return this.httpclient.post(AUTH_API + '/signup', {
+      email: user.email,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      username: user.username,
+      password: user.password,
+      confirmPassword: user.confirmPassword
+    });
   }
+}
+
+
+
+
+
 
 
