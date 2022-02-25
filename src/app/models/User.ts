@@ -1,4 +1,4 @@
-
+import {Message} from "./Message";
 export interface User {
   id: number;
   username: string;
@@ -6,4 +6,5 @@ export interface User {
   lastname: string;
   email: string;
   info:string;
+  message: string;
 }
