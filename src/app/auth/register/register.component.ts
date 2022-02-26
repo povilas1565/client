@@ -1,60 +1,59 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
 import {AuthService} from "../../services/auth.service";
 import {NotificationService} from "../../services/notification.service";
+import {TokenStorageService} from "../../services/token-storage.service";
 
+@Component({
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
+})
 
-@Component({ templateUrl: 'register.component.html' })
-export class RegisterComponent implements OnInit {
-  registerForm!: FormGroup;
-  loading = false;
-  submitted = false;
-
-  constructor(
-    private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private authService: AuthService,
-    private notificationService: NotificationService
-  ) {
-  }
-
-  ngOnInit() {
-    this.registerForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      username: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]]
-    });
-  }
-
-  get f() {
-    return this.registerForm.controls;
-  }
-
-  onSubmit() {
-    this.submitted = true;
-
-
-    this.notificationService.clear();
-
-
-    if (this.registerForm.invalid) {
-      return;
-    }
-
-    this.loading = true;
-    this.authService.register(this.registerForm.value)
-      .pipe(first())
-      .subscribe({
-        next: () => {
-          this.notificationService.success('Registration successful', {keepAfterRouteChange: true});
-          this.router.navigate(['../login'], {relativeTo: this.route});
+  export class RegisterComponent implements OnInit {
+      public registerForm!: FormGroup;
+      constructor(private authService: AuthService,
+                  private tokenService: TokenStorageService,
+                  private notificationService: NotificationService,
+                  private router: Router,
+                  private formBuilder: FormBuilder)
+      {
+        if (this.tokenService.getUser()) {
+          this.router.navigate(['/']);
         }
-      })
-  }
-}
+      }
+
+      createRegisterForm(): FormGroup {
+        return this.formBuilder.group({
+          username: ['', Validators.compose([Validators.required, Validators.email])],
+          password: ['', Validators.compose([Validators.required])],
+        })
+      }
+
+      ngOnInit(): void {
+        this.registerForm = this.createRegisterForm();
+      }
+
+      submitDataToServer(): void {
+        this.authService.register({
+          username: this.registerForm.value.username,
+          password: this.registerForm.value.password
+        }).subscribe(data => {
+            console.log(data);
+
+            this.tokenService.saveToken(data.token);
+            this.tokenService.saveUser(data);
+
+            this.notificationService.showSnackBar('Successful registration');
+            this.router.navigate(['/index']);
+            window.location.reload();
+          }
+          ,error => {
+            console.log(error);
+            this.notificationService.showSnackBar('Incorrect login or password' + error.message);
+          });
+      }
+    }
 
 

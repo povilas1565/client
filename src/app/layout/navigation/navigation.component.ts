@@ -4,7 +4,6 @@ import {TokenStorageService} from "../../services/token-storage.service";
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
 
-
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
@@ -21,7 +20,20 @@ export class NavigationComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
-    this. is
+    this. isLoggedIn = !!this.tokenService.getToken();
+
+    if(this.isLoggedIn) {
+      this.userService.getCurrentUser()
+        .subscribe(userdata => {
+          this.user = userdata;
+          this.isDataLoaded = true;
+        })
+    }
   }
 
+  logout(): void {
+    this.tokenService.logOut();
+    this.router.navigate(['/login']);
+    window.location.reload();
+  }
 }
