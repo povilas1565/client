@@ -24,11 +24,11 @@ export class ImageService {
     return this.httpclient.post( IMAGE_API + '/' + postId + '/upload', uploadData);
   }
 
-  getUserProfileImage(): Observable<any> {
+  getUserProfileImg(): Observable<any> {
     return this.httpclient.get( IMAGE_API + '/profileImage');
   }
 
-  getPostImage(postId: number): Observable<any> {
+  getPostImg(postId: number): Observable<any> {
     return this.httpclient.get( IMAGE_API + '/' + postId + '/image');
   }
 }

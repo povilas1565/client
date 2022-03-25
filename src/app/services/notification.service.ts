@@ -11,20 +11,11 @@ export class NotificationService {
 
   public showSnackBar(message: string): void {
     this.snackBar.open(message, "", {
-      duration: 5000
+      duration: 2000
     });
   }
-
-  register(value: any) {
-
-  }
-
-  clear() {
-
-  }
-
-  success(registrationSuccessful: string, param2: { keepAfterRouteChange: boolean }) {
-
-  }
-
 }
+
+
+
+
